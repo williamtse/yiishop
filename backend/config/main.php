@@ -6,6 +6,7 @@ $params = array_merge(
 
 use backend\models\Module;
 
+define('APP_DIR',__DIR__.'/../');
 global $menus;
 require 'functions.php';
 

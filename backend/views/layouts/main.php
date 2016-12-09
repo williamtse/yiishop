@@ -30,8 +30,6 @@ $ACT_ID = Yii::$app->controller->action->id;
     <body>
         <?php $this->beginBody() ?>
         <script>
-            
-	document.body.className = document.body.className.replace('no-js','js');
         $(function(){
             $('.wp-not-current-submenu').hover(function(){
                 $(this).addClass('opensub');
