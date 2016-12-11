@@ -1,4 +1,6 @@
-
+<?php
+use yii\helpers\Url;
+?>
 <style>
     .column-primary{width: 150px}
 </style>

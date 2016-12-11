@@ -10,16 +10,7 @@ class ModuleController extends Controller {
 
     public function actionIndex() {
         global $module_infos;
-        $map = get_module_map();
-        $installed_modules = array();
-        if(!empty($module_infos)){
-            foreach ($module_infos as $k => $m) {
-                if (isset($map[$k])) {
-                    $installed_modules[$k] = $m;
-                }
-            }
-        }
-        return $this->render('index', ['module_infos' => $installed_modules]);
+        return $this->render('index', ['module_infos' => $module_infos]);
     }
 
     /**
