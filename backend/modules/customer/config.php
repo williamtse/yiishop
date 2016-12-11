@@ -10,5 +10,5 @@ function add_customer_menu()
     add_menu('User', $menu,'f110');
     
 }
-add_action('hook_get_menus','add_user_menu');
+add_action('hook_get_menus','add_customer_menu');
 

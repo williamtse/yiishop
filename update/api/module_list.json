@@ -1,0 +1,20 @@
+{
+    "page":1,
+    "list":[
+        {
+            "version":"1.0.1",
+            "name" : "Customer",
+            "full_name":"Customer 1.0.1",
+            "logo":"http://update/images/icon.svg",
+            "package":"customer.1.0.1.zip",
+            "author":"william tse",
+            "author_url":"#",
+            "description":"for customer management",
+            "system_version":"1.0.0",
+            "upgrade_time":"7天前",
+            "install_count":"100万+",
+            "score":"4.5",
+            "score_count":"888"
+        }
+    ]
+}

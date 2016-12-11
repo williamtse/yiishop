@@ -83,6 +83,9 @@ $ACT_ID = Yii::$app->controller->action->id;
                                 .dashicons-admin-product:before{
                                     content:'\f174';
                                 }
+                                .dashicons-admin-module:before{
+                                    content:'\f180';
+                                }
                                 .wp-submenu{
                                     top:0px;
                                 }
@@ -115,6 +118,7 @@ $ACT_ID = Yii::$app->controller->action->id;
                                 </ul>
                             </li>
                             <?php }?>
+                            <li id="collapse-menu" class="hide-if-no-js"><div id="collapse-button"><div></div></div><span>收起菜单</span></li>
                         </ul>
                     </div>
                 </div>
