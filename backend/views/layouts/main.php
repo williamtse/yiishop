@@ -19,7 +19,11 @@ $ACT_ID = Yii::$app->controller->action->id;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<!--[if IE 8]>
+<html xmlns="http://www.w3.org/1999/xhtml" class="ie8 wp-toolbar"  lang="zh-CN">
+<![endif]-->
+<!--[if !(IE 8) ]><!-->
+<html lang="<?= Yii::$app->language ?>" xmlns="http://www.w3.org/1999/xhtml" class="wp-toolbar">
     <head>
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,21 +31,33 @@ $ACT_ID = Yii::$app->controller->action->id;
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-    <body>
+    <body class="wp-admin wp-core-ui js  update-php admin-bar branch-4-5 version-4-5-4 admin-color-fresh locale-zh-cn customize-support sticky-menu svg">
         <?php $this->beginBody() ?>
         <script>
-        $(function(){
-            $('.wp-not-current-submenu').hover(function(){
+        var opensub = function(){
                 $(this).addClass('opensub');
                 $(this).find('.wp-submenu').show();
-                $(this).find('.wp-submenu').css({'top':0,'display':'block'});
-            },function(){
+            };
+        var closesub = function(){
                 $(this).removeClass('opensub');
                 $(this).find('.wp-submenu').hide();
+            };
+        var current_click_menu;
+        $(function(){
+            $('.wp-not-current-submenu').hover(opensub,closesub);
+            $("#collapse-menu").click(function(){
+                if($('body').hasClass('auto-fold')){
+                    $('body').removeClass('auto-fold');
+                }else{
+                    $('body').addClass('auto-fold');
+                }
+            });
+            $("#wp-admin-bar-menu-toggle").click(function(){
+                $("#adminmenuback").toggle();
+                $("#adminmenuwrap").toggle();
             });
         });
         </script>
-        <div class="wrap">
             <?php
             if (Yii::$app->user->isGuest) {
                 $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
@@ -102,7 +118,7 @@ $ACT_ID = Yii::$app->controller->action->id;
                                         }
                             ?>
                             <li class="wp-has-submenu <?=(in_array($CTR_ID, $ctrls))?'wp-has-current-submenu wp-menu-open':'wp-not-current-submenu'?>  menu-top menu-icon-media" id="menu-posts">
-                                <a href="<?= Url::toRoute($menu['url']) ?>" class="wp-has-submenu <?=(in_array($CTR_ID, $ctrls))?'wp-has-current-submenu':''?> wp-menu-open menu-top menu-icon-post open-if-no-js menu-top-first" aria-haspopup="false">
+                                <a href="<?=Url::toRoute($CTR_ID.'/'.$ACT_ID)?>" class="wp-has-submenu <?=(in_array($CTR_ID, $ctrls))?'wp-has-current-submenu':''?> wp-menu-open menu-top menu-icon-post" aria-haspopup="false">
                                     <div class="wp-menu-arrow"><div></div></div>
                                     <div class="wp-menu-image dashicons-before <?=$menu['icon_class']?>"><br></div>
                                     <div class="wp-menu-name"><?=$menu['text']?></div>
@@ -111,8 +127,8 @@ $ACT_ID = Yii::$app->controller->action->id;
                                 <ul class="wp-submenu wp-submenu-wrap" <?=(in_array($CTR_ID, $ctrls))?'':'style="display:none"'?>>
                                     <li class="wp-submenu-head" aria-hidden="true"><?=$menu['text']?></li>
                                     <?php foreach($menu['submenus'] as $sub){?>
-                                    <li class="wp-first-item <?=(in_array($CTR_ID.'/'.$ACT_ID,$sub[2])?'current':'')?>">
-                                        <a href="<?= Url::toRoute($sub[0]) ?>" class="wp-first-item <?=(in_array($CTR_ID.'/'.$ACT_ID,$sub[2])?'current':'')?>"><?=$sub[1]?></a>
+                                    <li class="<?=(in_array($CTR_ID.'/'.$ACT_ID,$sub[2])?'current':'')?>">
+                                        <a href="<?= Url::toRoute($sub[0]) ?>" class="<?=(in_array($CTR_ID.'/'.$ACT_ID,$sub[2])?'current':'')?>"><?=$sub[1]?></a>
                                     </li>
                                     <?php }?>
                                 </ul>
@@ -157,36 +173,17 @@ $ACT_ID = Yii::$app->controller->action->id;
 
 
                     <div id="wpbody" role="main">
-                        <?= $content ?>
-                    </div><!-- wpbody -->
-                    <div class="clear"></div></div><!-- wpcontent -->
-
-
-                <div id="wp-auth-check-wrap" class="hidden">
-                    <div id="wp-auth-check-bg"></div>
-                    <div id="wp-auth-check">
-                        <button type="button" class="wp-auth-check-close button-link"><span class="screen-reader-text">关闭对话框</span></button>
-                        <div id="wp-auth-check-form" class="loading" data-src="http://wordpress/wp-login.php?interim-login=1"></div>
-                        <div class="wp-auth-fallback">
-                            <p><b class="wp-auth-fallback-expired" tabindex="0">会话已过期</b></p>
-                            <p><a href="http://wordpress/wp-login.php" target="_blank">请重新登录。</a>
-                                登录页会在新窗口中打开，在登录后您可关闭该窗口并返回本页。</p>
+                        <div id="wpbody-content" tabindex="0">
+                            <?= $content ?>
                         </div>
-                    </div>
+                        <div class="clear"></div>
+                    </div><!-- wpbody -->
+                    <div class="clear"></div>
                 </div>
-                <link rel="stylesheet" href="http://wordpress/wp-admin/load-styles.php?c=1&amp;dir=ltr&amp;load%5B%5D=wp-pointer&amp;ver=4.6.1" type="text/css" media="all">
-                <link rel="stylesheet" id="aiosp_admin_style-css" href="http://wordpress/wp-content/plugins/all-in-one-seo-pack/css/aiosp_admin.css?ver=4.6.1" type="text/css" media="all">
-
-                <script type="text/javascript">
-                    /* <![CDATA[ */
-                    var commonL10n = {"warnDelete":"\u60a8\u5c06\u6c38\u4e45\u5220\u9664\u8fd9\u4e9b\u9879\u76ee\u3002\n\u70b9\u51fb\u201c\u53d6\u6d88\u201d\u505c\u6b62\uff0c\u70b9\u51fb\u201c\u786e\u5b9a\u201d\u5220\u9664\u3002", "dismiss":"\u5ffd\u7565\u6b64\u901a\u77e5\u3002"}; var heartbeatSettings = {"nonce":"89ca228c11"}; var authcheckL10n = {"beforeunload":"\u60a8\u7684\u767b\u5f55\u4f1a\u8bdd\u5df2\u8fc7\u671f\uff0c\u8bf7\u91cd\u65b0\u767b\u5f55\u3002", "interval":"180"}; var wpPointerL10n = {"dismiss":"\u4e0d\u518d\u663e\u793a"}; /* ]]> */
-                </script>
-                <script type="text/javascript" src="http://wordpress/wp-admin/load-scripts.php?c=1&amp;load%5B%5D=hoverIntent,common,admin-bar,svg-painter,heartbeat,wp-auth-check,jquery-ui-widget,jquery-ui-position,wp-pointer&amp;ver=4.6.1"></script>
-
-                <div class="clear"></div></div>
-
-
+                <!-- wpcontent -->
+                <div class="clear"></div>
+            </div>
             <?php $this->endBody() ?>
-    </body>
+        </body>
 </html>
 <?php $this->endPage() ?>
