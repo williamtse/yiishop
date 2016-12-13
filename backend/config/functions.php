@@ -78,7 +78,7 @@ function hook_menu_after_dashboard() {
  * @param type $menu
  * https://developer.wordpress.org/resource/dashicons
  */
-function get_menu_html($name, $menu) {
+function get_menu_html($menu) {
     $CTR_ID = Yii::$app->controller->id;
     $ACT_ID = Yii::$app->controller->action->id;
     foreach ($menu['submenus'] as $m) {

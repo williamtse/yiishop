@@ -18,7 +18,7 @@ function add_test_menu()
                 ['test/index', '所有测试', ['test/index'],'hook_submenu_after_test_index'],
         ],
     ];
-    echo get_menu_html('test', $menu);
+    echo get_menu_html($menu);
 }
 
 function add_menu_icon()
