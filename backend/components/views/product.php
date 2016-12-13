@@ -1,4 +1,6 @@
-
+<?php
+use yii\helpers\Url;
+?>
 <form id="posts-filter" method="get">
 
     <p class="search-box">
@@ -55,39 +57,22 @@
                         <input id="cb-select-1" type="checkbox" name="post[]" value="<?=$row['id']?>">
                         <div class="locked-indicator"></div>
                     </th>
-                    <td class="title column-title has-row-actions column-primary page-title" data-colname="标题"><strong><a class="row-title" href="http://wordpress/wp-admin/post.php?post=1&amp;action=edit" aria-label="“世界，您好！”（编辑）">世界，您好！</a></strong>
+                    <td class="title column-title has-row-actions column-primary page-title" data-colname="标题">
+                        <strong>
+                            <a class="row-title" href="<?=Url::toRoute(['/product/update','id'=>$row['id']])?>" aria-label="“<?=$row['title']?>”（编辑）">
+                                <?=$row['title']?>
+                            </a>
+                        </strong>
                         <div class="locked-info">
                             <span class="locked-avatar"></span> 
                             <span class="locked-text"></span>
                         </div>
-
-                        <div class="hidden" id="inline_1">
-                            <div class="post_title"><?=$row['title']?></div>
-                            <div class="post_name">hello-world</div>
-                            <div class="post_author">1</div>
-                            <div class="comment_status">open</div>
-                            <div class="ping_status">open</div>
-                            <div class="_status">publish</div>
-                            <div class="jj">06</div>
-                            <div class="mm">12</div>
-                            <div class="aa">2016</div>
-                            <div class="hh">13</div>
-                            <div class="mn">18</div>
-                            <div class="ss">32</div>
-                            <div class="post_password"></div>
-                            <div class="post_category" id="category_1">1</div>
-                            <div class="tags_input" id="post_tag_1"></div>
-                            <div class="sticky"></div>
-                            <div class="post_format"></div>
-                                
-                        </div>
                         <div class="row-actions">
-                            <span class="edit"><a href="http://wordpress/wp-admin/post.php?post=1&amp;action=edit" aria-label="编辑“世界，您好！”">编辑</a> | </span>
-                            <span class="inline hide-if-no-js"><a href="#" class="editinline" aria-label="快速编辑“世界，您好！”">快速编辑</a> | </span>
+                            <span class="edit"><a href="<?=Url::toRoute(['/product/update','id'=>$row['id']])?>" aria-label="编辑“<?=$row['title']?>”">编辑</a> | </span>
                             <span class="trash">
-                                <a href="http://wordpress/wp-admin/post.php?post=1&amp;action=trash&amp;_wpnonce=653e9802e2" class="submitdelete" aria-label="移动“世界，您好！”到垃圾箱">移至回收站</a> | 
+                                <a href="<?=Url::toRoute(['/product/trash','id'=>$row['id']])?>" class="submitdelete" aria-label="移动“<?=$row['title']?>”到垃圾箱">移至回收站</a> | 
                             </span>
-                            <span class="view"><a href="http://wordpress/2016/12/06/hello-world/" rel="permalink" aria-label="查看“世界，您好！”">查看</a></span>
+                            <span class="view"><a href="http://wordpress/2016/12/06/hello-world/" rel="permalink" aria-label="查看“<?=$row['title']?>”">查看</a></span>
                         </div>
                         <button type="button" class="toggle-row"><span class="screen-reader-text">显示详情</span></button>
                     </td>

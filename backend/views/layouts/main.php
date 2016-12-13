@@ -22,7 +22,7 @@ global $menus;
     <head>
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-<?= Html::csrfMetaTags() ?>
+        <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
@@ -38,34 +38,38 @@ global $menus;
                     $(this).removeClass('opensub');
                     $(this).find('.wp-submenu').hide();
                 });
-
+                $('.menupop').hover(function(){
+                    $(this).addClass('hover');
+                },function(){
+                    $(this).removeClass('hover');
+                });
             });
         </script>
         <style>
-            <?php foreach($menus as $k=>$v){ ?>
-            .<?=$v['icon_class']?>:before{
-                content:'<?=$v['icon-font']?>';
+<?php foreach ($menus as $k => $v) { ?>
+                .<?= $v['icon_class'] ?>:before{
+                    content:'<?= $v['icon-font'] ?>';
 
-            }
-            <?php }?>
-            <?= do_action('hook_style')?>
+                }
+<?php } ?>
+<?= do_action('hook_style') ?>
             .wp-submenu{
                 top:0px;
             }
         </style>
-<?php
-if (Yii::$app->user->isGuest) {
-    $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-} else {
-    $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-}
-?>
+        <?php
+        if (Yii::$app->user->isGuest) {
+            $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        } else {
+            $menuItems[] = '<li>'
+                    . Html::beginForm(['/site/logout'], 'post')
+                    . Html::submitButton(
+                            'Logout (' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-link logout']
+                    )
+                    . Html::endForm()
+                    . '</li>';
+        }
+        ?>
 
         <div id="wpwrap">
             <div id="adminmenumain" role="navigation" aria-label="主页">
@@ -78,7 +82,8 @@ if (Yii::$app->user->isGuest) {
                         foreach ($menus as $menu) {
                             $ctrls = [];
                             foreach ($menu['submenus'] as $m) {
-                                $ctrls[] = substr($m[0], 0, strpos($m[0], '/'));
+                                $uri= substr($m[0],1);
+                                $ctrls[] = substr($uri, 0, strpos($uri, '/'));
                             }
                             ?>
                             <li class="wp-has-submenu <?= (in_array($CTR_ID, $ctrls)) ? 'wp-has-current-submenu wp-menu-open' : 'wp-not-current-submenu' ?>  menu-top menu-icon-media" id="menu-posts">
@@ -90,26 +95,25 @@ if (Yii::$app->user->isGuest) {
 
                                 <ul class="wp-submenu wp-submenu-wrap" <?= (in_array($CTR_ID, $ctrls)) ? '' : 'style="display:none"' ?>>
                                     <li class="wp-submenu-head" aria-hidden="true"><?= $menu['text'] ?></li>
-    <?php foreach ($menu['submenus'] as $sub) { ?>
+                                    <?php foreach ($menu['submenus'] as $sub) { ?>
                                         <li class="wp-first-item <?= (in_array($CTR_ID . '/' . $ACT_ID, $sub[2]) ? 'current' : '') ?>">
                                             <a href="<?= Url::toRoute($sub[0]) ?>" class="wp-first-item <?= (in_array($CTR_ID . '/' . $ACT_ID, $sub[2]) ? 'current' : '') ?>"><?= $sub[1] ?></a>
                                         </li>
-                            <?php
-                                if(isset($sub['hook'])){
-                                    do_action($sub['hook']);
-                                }
-                            ?>
-    <?php } ?>
+                                        <?php
+                                        if (isset($sub['hook'])) {
+                                            do_action($sub['hook']);
+                                        }
+                                        ?>
+                                    <?php } ?>
                                 </ul>
                             </li>
                             <?php
-                                if(isset($menu['hook'])){
-                                    do_action($menu['hook']);
-
-                                }
+                            if (isset($menu['hook'])) {
+                                do_action($menu['hook']);
+                            }
                             ?>
 
-                                <?php } ?>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
@@ -146,18 +150,27 @@ if (Yii::$app->user->isGuest) {
                                     </ul>
                                 </div>		
                             </li>
-                            <li id="wp-admin-bar-comments"><a class="ab-item" href="http://wordpress/wp-admin/edit-comments.php"><span class="ab-icon"></span><span id="ab-awaiting-mod" class="ab-label awaiting-mod pending-count count-0" aria-hidden="true">0</span><span class="screen-reader-text">0条评论待审</span></a>		</li>
+                            <li id="wp-admin-bar-comments">
+                                <a class="ab-item" href="http://wordpress/wp-admin/edit-comments.php">
+                                    <span class="ab-icon"></span>
+                                    <span id="ab-awaiting-mod" class="ab-label awaiting-mod pending-count count-0" aria-hidden="true">0</span>
+                                    <span class="screen-reader-text">0条评论待审</span>
+                                </a>		
+                            </li>
                             <li id="wp-admin-bar-new-content" class="menupop">
-                                <a class="ab-item" aria-haspopup="true" href="http://wordpress/wp-admin/post-new.php">
+                                <a class="ab-item" aria-haspopup="true" href="<?=Url::toRoute('product/create')?>">
                                     <span class="ab-icon"></span>
                                     <span class="ab-label">新建</span>
                                 </a>
                                 <div class="ab-sub-wrapper">
                                     <ul id="wp-admin-bar-new-content-default" class="ab-submenu">
-                                        <li id="wp-admin-bar-new-post"><a class="ab-item" href="<?=Url::toRoute('product/create')?>">商品</a>		</li>
-                                        <li id="wp-admin-bar-new-media"><a class="ab-item" href="http://wordpress/wp-admin/media-new.php"></a>		</li>
-                                        <li id="wp-admin-bar-new-page"><a class="ab-item" href="http://wordpress/wp-admin/post-new.php?post_type=page">页面</a>		</li>
-                                        <li id="wp-admin-bar-new-user"><a class="ab-item" href="http://wordpress/wp-admin/user-new.php">用户</a>		</li>
+                                        <?php foreach($menus as $mk=>$mv){ 
+                                        if(isset($mv['bar-new'])){
+                                        ?>
+                                        <li id="wp-admin-bar-new-<?=$mk?>">
+                                            <a class="ab-item" href="<?= Url::toRoute($mv['bar-new']) ?>"><?=$mv['text']?></a>		
+                                        </li>
+                                        <?php }}?>
                                     </ul>
                                 </div>		
                             </li>
@@ -198,12 +211,12 @@ if (Yii::$app->user->isGuest) {
             <link rel="stylesheet" href="http://wordpress/wp-admin/load-styles.php?c=1&amp;dir=ltr&amp;load%5B%5D=wp-pointer&amp;ver=4.6.1" type="text/css" media="all">
             <link rel="stylesheet" id="aiosp_admin_style-css" href="http://wordpress/wp-content/plugins/all-in-one-seo-pack/css/aiosp_admin.css?ver=4.6.1" type="text/css" media="all">
             <div class="clear"></div>
-                
+
         </div>
 
 
-<?php $this->endBody() ?>
+        <?php $this->endBody() ?>
     </body>
 
 </html>
-        <?php $this->endPage() ?>
+<?php $this->endPage() ?>

@@ -11,11 +11,11 @@ function add_test_menu()
     $menu = [
         'icon_class' => 'dashicons-admin-test',
         'icon-font' => '\f468',
-        'url' => 'test/index',
+        'url' => '/test/default',
         'text' => '测试',
-        'hook'=>'hook_menu_after_product',
         'submenus' => [
-                ['test/index', '所有测试', ['test/index'],'hook_submenu_after_test_index'],
+                ['/test/default/index', '所有测试', ['default/index']],
+                ['/test/default/hello','hello',['default/hello']]
         ],
     ];
     echo get_menu_html($menu);

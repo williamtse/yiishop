@@ -30,7 +30,7 @@ function load_modules($module_dir) {
             $module_folder = $module_dir.'/'.$file;
             if ($file != '.' && $file != '..' && is_dir($module_folder)) {
                 $main_file = ucfirst($file);
-                $modules[$file] = 'app\modules\\' . $file . '\\' .$main_file ;
+                $modules[$file] = 'backend\modules\\' . $file . '\\' .$main_file ;
 
                 include_once $module_dir . '/' . $file . '/config.php';
                 $module_infos[$file] = get_file_data($module_folder.'/'.$main_file.'.php', $default_headers);
@@ -169,7 +169,9 @@ function get_menu_html($menu) {
     $CTR_ID = Yii::$app->controller->id;
     $ACT_ID = Yii::$app->controller->action->id;
     foreach ($menu['submenus'] as $m) {
-        $ctrls[] = substr($m[0], 0, strpos($m[0], '/'));
+        $uri = substr($m[0],1);
+        $uri_arr = explode('/',$uri);
+        $ctrls[] = $uri_arr[1];
     }
     $menu_html = '<li class="wp-has-submenu ' . ((in_array($CTR_ID, $ctrls)) ? 'wp-has-current-submenu wp-menu-open' : 'wp-not-current-submenu') . '  menu-top menu-icon-media" id="menu-posts">
                                 <a href="' . Url::toRoute($menu['url']) . '" class="wp-has-submenu ' . ((in_array($CTR_ID, $ctrls)) ? 'wp-has-current-submenu' : '') . ' wp-menu-open menu-top menu-icon-post open-if-no-js menu-top-first" aria-haspopup="false">
@@ -182,8 +184,8 @@ function get_menu_html($menu) {
                                     <li class="wp-submenu-head" aria-hidden="true">' . $menu['text'] . '</li>';
     foreach ($menu['submenus'] as $sub) {
         $menu_html .= '<li class="wp-first-item ' . (in_array($CTR_ID . '/' . $ACT_ID, $sub[2]) ? 'current' : '') . '">
-                                            <a href="' . Url::toRoute($sub[0]) . '" class="wp-first-item ' . (in_array($CTR_ID . '/' . $ACT_ID, $sub[2]) ? 'current' : '') . '">' . $sub[1] . '</a>
-                                        </li>';
+                        <a href="' . Url::toRoute($sub[0]) . '" class="wp-first-item ' . (in_array($CTR_ID . '/' . $ACT_ID, $sub[2]) ? 'current' : '') . '">' . $sub[1] . '</a>
+                    </li>';
     }
     $menu_html .= '</ul>
                             </li>';

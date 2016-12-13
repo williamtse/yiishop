@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -11,23 +12,43 @@ use yii\widgets\ActiveForm;
     $(function(){
         $('#category-btn').click(function(){
             $('.theme-overlay').show();
+            var cid = $('input[name="Product[cid]"]').val();
+            if(cid>0){
+                console.log(cid);
+                var id = '#cid-'+cid;
+                $(id).prop('checked',true);
+            }
+        });
+        $('#repeak').click(function(){
+            $('.theme-overlay').show();
         });
         $('.close').click(function(){
                 $('.theme-overlay').hide();
-            });
+        });
     });
 </script>
+<style>
+    #selected-category b{color:red}
+</style>
 <div class="product-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <p>
+        <span class="button button-primary" id="category-btn">选择分类</span>
+        <span id="selected-category" style="display: none"><b></b>
+            <a href="javascript:void(0)" class="button button-secondary" id="repeak">重新选择</a>
+        </span>
+        <?= $form->field($model, 'cid')->hiddenInput(['value'=> $model->isNewRecord?0:$model->cid])->label(false); ?>
+    </p>
+    
     <?= $form->field($model, 'title',['labelOptions'=>['label'=>'标题']])->textInput(['maxlength' => true]) ?>
     
     
 
     <?= $form->field($model, 'price',['labelOptions'=>['label'=>'价格']])->textInput(["style"=>'width:100px']) ?>
 
-    <p><span class="btn btn-info" id="category-btn">选择分类</span></p>
+    
     
     <?= $form->field($model, 'detial',['labelOptions'=>['label'=>'详情']])->widget(\yii\redactor\widgets\Redactor::className(), [
     'clientOptions' => [
@@ -40,7 +61,8 @@ use yii\widgets\ActiveForm;
     ]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? '新建' : '更新', ['class' => $model->isNewRecord ? 'button button-primary' : 'button button-primary']) ?>
+        <a href="<?=Url::toRoute(['/product/index'])?>" class="button button-secondary">返回</a>
     </div>
 
     <?php ActiveForm::end(); ?>
