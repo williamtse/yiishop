@@ -6,6 +6,8 @@ use Yii;
 
 class Upgrader {
 
+    public $error;
+    public $install_path;
     public function get_remote_package($package) {
         $path = API_PACKAGES . $package;
         $this->dowload($path, $package);
@@ -27,6 +29,22 @@ class Upgrader {
         } else {
             echo $this->getUnzipErrorMsg($errorCode);
         }
+    }
+    
+    public function check_package($package){
+        $module_name = substr($package, 0, strpos($package, '.'));
+        $this->install_path = APP_DIR.'modules/'.$module_name;
+        $mainFile = $this->install_path.'/'. ucwords($module_name).'.php';
+        if(!file_exists($mainFile)){
+            $this->error =  "安装包主文件不存在";
+            return FALSE;
+        }
+        $module_info = get_file_data($mainFile);
+        if(!$module_info['Name'] || !$module_info['Version'] || !$module_info['Description'] || !$module_info['Author']){
+            $this->error =  "模块信息不完整";
+            return FALSE;
+        }
+        return true;
     }
     
     private  function getUnzipErrorMsg($errorCode)

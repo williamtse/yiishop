@@ -43,6 +43,13 @@ global $menus;
                 },function(){
                     $(this).removeClass('hover');
                 });
+                $('#collapse-menu').click(function(){
+                    if($('body').hasClass('auto-fold')){
+                        $('body').removeClass('auto-fold');
+                    }else{
+                        $('body').addClass('auto-fold');
+                    }
+                });
             });
         </script>
         <style>
@@ -114,6 +121,7 @@ global $menus;
                             ?>
 
                         <?php } ?>
+                            <li id="collapse-menu" class="hide-if-no-js"><div id="collapse-button"><div></div></div><span>收起菜单</span></li>
                     </ul>
                 </div>
             </div>
@@ -208,8 +216,6 @@ global $menus;
                     </div>
                 </div>
             </div>
-            <link rel="stylesheet" href="http://wordpress/wp-admin/load-styles.php?c=1&amp;dir=ltr&amp;load%5B%5D=wp-pointer&amp;ver=4.6.1" type="text/css" media="all">
-            <link rel="stylesheet" id="aiosp_admin_style-css" href="http://wordpress/wp-content/plugins/all-in-one-seo-pack/css/aiosp_admin.css?ver=4.6.1" type="text/css" media="all">
             <div class="clear"></div>
 
         </div>

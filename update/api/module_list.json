@@ -15,6 +15,21 @@
             "install_count":"100万+",
             "score":"4.5",
             "score_count":"888"
+        },
+		{
+            "version":"3.1.11",
+            "name" : "Test",
+            "full_name":"Test 3.1.11",
+            "logo":"http://update/images/icon.svg",
+            "package":"test.3.1.11.zip",
+            "author":"william tse",
+            "author_url":"#",
+            "description":"for customer management",
+            "system_version":"1.0.0",
+            "upgrade_time":"7天前",
+            "install_count":"100万+",
+            "score":"5",
+            "score_count":"888"
         }
     ]
 }

@@ -11,6 +11,7 @@ global $menus,$module_infos;
 require 'functions.php';
 
 $modules = load_modules('../modules');
+load_actived_modules('../modules');
 $modules['redactor'] = 'yii\redactor\RedactorModule';
 require 'menu.php';
 

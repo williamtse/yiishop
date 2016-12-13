@@ -26,5 +26,5 @@ function add_menu_icon()
     echo ".dashicons-admin-test:before{content:'\\f486'}";
 }
 
-add_action('hook_menu_after_site', 'add_test_menu');
+add_action('hook_menu_after_customer', 'add_test_menu');
 add_action('hook_style','add_menu_icon');

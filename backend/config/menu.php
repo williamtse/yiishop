@@ -32,7 +32,7 @@ $menus = [
     ],
     'customer' => [
         'icon_class' => 'dashicons-admin-customer',
-        'icon-font' => '\f110',
+        'icon-font' => '\f307',
         'url' => '/customer/index',
         'text' => '客户',
         'hook'=>'hook_menu_after_customer',
@@ -50,7 +50,20 @@ $menus = [
                 ['/order/index', '所有订单', ['order/index', 'order/update'],'hook_submenu_after_order_index'],
         ],
     ],
+    'module' => [
+        'icon_class' => 'dashicons-admin-module',
+        'icon-font' => '\f106',
+        'url' => '/module/index',
+        'text' => '模块',
+        'hook'=>'hook_menu_after_module',
+        'submenus' => [
+            ['/module/index', '已安装模块', ['module/index'],'hook_submenu_after_module_index'],
+            ['/module/install', '安装模块', ['module/install'],'hook_submenu_after_module_install'],
+            ['/module/update','编辑',['module/update'],'hook_submenu_after_module_update']
+        ],
+    ],
 ];
+
 
 
 

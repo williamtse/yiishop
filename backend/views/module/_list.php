@@ -52,8 +52,8 @@ use yii\helpers\Url;
                     <strong><?=$m['Name']?></strong>
                     <div class="row-actions visible">
                         <span class="activate">
-                            <a href="<?=($m['actived']?Url::toRoute(['module/unactive']):Url::toRoute(['module/active']))?>&paged=" 
-                               class="edit" aria-label="激活Akismet"><?=($m['actived']?'禁用':'启用')?></a> 
+                            <a href="<?=($m['actived']?Url::toRoute(['module/unactive','name'=>$m['Name']]):Url::toRoute(['module/active','name'=>$m['Name']]))?>&paged=" 
+                               class="edit" aria-label="激活Akismet"><?=($m['actived']?'停用':'启用')?></a> 
                             | 
                         </span>
                         <span class="edit">

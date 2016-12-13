@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\helpers\Url;
 use yii\web\Controller;
 use backend\models\Module;
 
@@ -38,31 +39,36 @@ class ModuleController extends Controller {
     public function actionActive() {
         $module_name = Yii::$app->request->get('name');
         $active_info = get_module_map();
-        if (isset($active_info[$module_name]))
-            $active_info[$module_name] = 1;
+        $active_info[$module_name] = 1;
         reset_module_map($active_info);
-        return $this->redirect('index');
+        return $this->redirect([strtolower($module_name).'/default']);
     }
 
     /**
      * 禁用
      */
     public function actionUnactive() {
-        $module_name = Yii::$app->request->get('module');
-        $modules_file = APP_DIR . 'modules/module_map.txt';
-        $modules = file_get_contents($modules_file);
-        if ($modules = json_decode($modules, true)) {
-            if (isset($modules[$module_name])) {
-                $modules[$module_name]['actived'] = 0;
-            }
+        $module_name = Yii::$app->request->get('name');
+        $active_info = get_module_map();
+        if (isset($active_info[$module_name])) {
+            $active_info[$module_name] = 0;
+            reset_module_map($active_info);
         }
+        return $this->redirect(['index']);
     }
 
     /**
      * 卸载模块
      */
-    public function actionUninstall() {
-        
+    public function actionDelete() {
+        $module_name = Yii::$app->request->get('name');
+        deldir(APP_DIR.'modules/'.$module_name);
+        $active_info = get_module_map();
+        if (isset($active_info[ucwords($module_name)])) {
+            unset($active_info[ucwords($module_name)]);
+            reset_module_map($active_info);
+        }
+        return $this->redirect(['index']);
     }
 
     public function actionInstall_frame() {
@@ -70,8 +76,16 @@ class ModuleController extends Controller {
         sendMessage('<h1>正在安装模块：' . Yii::$app->request->get('full_name') . '</h1>');
         sendMessage('<p>正在从<span class="code">' . API_PACKAGES . $package . '</span>下载安装包…</p>');
         Yii::$app->upgrader->get_remote_package($package);
-        sendMessage("<p>正在解压安装<span class=\"code\">$package</span>…</p>" . "\n");
+        sendMessage("<p>正在解压<span class=\"code\">$package</span>…</p>" . "\n");
         Yii::$app->upgrader->unzip_package($package);
+        sendMessage("<p>正在检查安装包...</p>");
+        if(!Yii::$app->upgrader->check_package($package)){
+            sendMessage("<p>".Yii::$app->upgrader->error."</p>");
+            sendMessage("<p>安装失败</p>");
+            deldir(Yii::$app->upgrader->install_path);
+            exit();
+        }
         sendMessage("<p>安装完毕</p>");
+        sendMessage('<script>parent.document.location.href="'.Url::toRoute('module/index').'";</script>');
     }
 }
