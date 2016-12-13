@@ -44,10 +44,10 @@ global $menus;
                     $(this).removeClass('hover');
                 });
                 $('#collapse-menu').click(function(){
-                    if($('body').hasClass('auto-fold')){
-                        $('body').removeClass('auto-fold');
+                    if($('body').hasClass('folded')){
+                        $('body').removeClass('folded');
                     }else{
-                        $('body').addClass('auto-fold');
+                        $('body').addClass('folded');
                     }
                 });
             });
