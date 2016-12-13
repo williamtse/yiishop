@@ -1,14 +1,30 @@
 <?php
 
-function add_user_menu()
-{
-    global $menus;
-    $menu = ['icon_class'=>'dashicons-admin-user','url'=>'user/index','text'=>'用户','submenus'=>[
-        ['user/index','所有用户',['user/index','user/update']],
-        ['user/create','新用户',['user/create']],
-    ]];
-    add_menu('User', $menu,'f110');
-    
-}
-add_action('hook_get_menus','add_user_menu');
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
+function add_test_menu()
+{
+    $menu = [
+        'icon_class' => 'dashicons-admin-test',
+        'icon-font' => '\f468',
+        'url' => 'test/index',
+        'text' => '测试',
+        'hook'=>'hook_menu_after_product',
+        'submenus' => [
+                ['test/index', '所有测试', ['test/index'],'hook_submenu_after_test_index'],
+        ],
+    ];
+    echo get_menu_html('test', $menu);
+}
+
+function add_menu_icon()
+{
+    echo ".dashicons-admin-test:before{content:'\\f486'}";
+}
+
+add_action('hook_menu_after_site', 'add_test_menu');
+add_action('hook_style','add_menu_icon');
