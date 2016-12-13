@@ -5,9 +5,9 @@ $params = array_merge(
 );
 
 use backend\models\Module;
-
+require 'apis.php';
 define('APP_DIR',__DIR__.'/../');
-global $menus;
+global $menus,$module_infos;
 require 'functions.php';
 
 $modules = load_modules('../modules');
@@ -21,6 +21,16 @@ return [
     'bootstrap' => ['log'],
     'modules' => $modules,
     'components' => [
+        'curl' => array(
+            'class' => 'backend\helpers\Curl',
+            'options' => array()
+        ),
+        'score'=>array(
+          'class'=>'backend\helpers\Score',
+        ),
+        'upgrader'=>[
+            'class'=>'backend\helpers\Upgrader'
+        ],
         'assetManager' => [
             'bundles' => [
                 'yii\web\JqueryAsset' => [

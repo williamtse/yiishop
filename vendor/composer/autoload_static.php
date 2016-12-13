@@ -31,6 +31,10 @@ class ComposerStaticInitc0e6f35e5480504eb707df6acbeeb6fa
         array (
             'phpDocumentor\\Reflection\\' => 25,
         ),
+        'l' => 
+        array (
+            'linslin\\yii2\\curl\\' => 18,
+        ),
         'c' => 
         array (
             'cebe\\markdown\\' => 14,
@@ -118,6 +122,10 @@ class ComposerStaticInitc0e6f35e5480504eb707df6acbeeb6fa
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+        ),
+        'linslin\\yii2\\curl\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/linslin/yii2-curl',
         ),
         'cebe\\markdown\\' => 
         array (

@@ -18,6 +18,7 @@ global $menus;
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="wp-toolbar">
+
     <head>
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,12 +38,14 @@ global $menus;
                     $(this).removeClass('opensub');
                     $(this).find('.wp-submenu').hide();
                 });
+
             });
         </script>
         <style>
             <?php foreach($menus as $k=>$v){ ?>
             .<?=$v['icon_class']?>:before{
                 content:'<?=$v['icon-font']?>';
+
             }
             <?php }?>
             <?= do_action('hook_style')?>
@@ -102,8 +105,10 @@ if (Yii::$app->user->isGuest) {
                             <?php
                                 if(isset($menu['hook'])){
                                     do_action($menu['hook']);
+
                                 }
                             ?>
+
                                 <?php } ?>
                     </ul>
                 </div>
@@ -156,6 +161,7 @@ if (Yii::$app->user->isGuest) {
                                     </ul>
                                 </div>		
                             </li>
+
                         </ul>
                         <ul id="wp-admin-bar-top-secondary" class="ab-top-secondary ab-top-menu">
                             <li id="wp-admin-bar-my-account" class="menupop with-avatar">
@@ -198,5 +204,6 @@ if (Yii::$app->user->isGuest) {
 
 <?php $this->endBody() ?>
     </body>
+
 </html>
         <?php $this->endPage() ?>

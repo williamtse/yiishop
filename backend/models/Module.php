@@ -16,4 +16,9 @@ class Module extends ActiveRecord
     {
         return 'module';
     }
+    
+    public static function getModules()
+    {
+        
+    }
 }
