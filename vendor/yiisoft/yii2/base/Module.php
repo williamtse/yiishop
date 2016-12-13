@@ -9,6 +9,7 @@ namespace yii\base;
 
 use Yii;
 use yii\di\ServiceLocator;
+use yii\web\NotFoundHttpException;
 
 /**
  * Module is the base class for module and application classes.
@@ -37,6 +38,7 @@ use yii\di\ServiceLocator;
  */
 class Module extends ServiceLocator
 {
+    public $enable=true;
     /**
      * @event ActionEvent an event raised before executing a controller action.
      * You may set [[ActionEvent::isValid]] to be `false` to cancel the action execution.
@@ -175,6 +177,9 @@ class Module extends ServiceLocator
      */
     public function init()
     {
+        if( !$this->enable ){
+            throw new NotFoundHttpException("模块已停用");
+        }
         if ($this->controllerNamespace === null) {
             $class = get_class($this);
             if (($pos = strrpos($class, '\\')) !== false) {

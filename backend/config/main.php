@@ -12,7 +12,21 @@ require 'functions.php';
 
 $modules = load_modules('../modules');
 load_actived_modules('../modules');
-$modules['redactor'] = 'yii\redactor\RedactorModule';
+$modules_info = get_module_map();
+foreach($modules as $m=>$info)
+{
+    $upm = ucwords($m);
+    if(isset($modules_info[$upm])){
+        if($modules_info[$upm]===0){
+            $modules_info[$m] = ['enable'=>false,'class'=>'backend\modules\\'.$m.'\\'. $upm];
+        }else{
+            $modules_info[$m] = 'backend\modules\\'.$m.'\\'. $upm;
+        }
+    }else{
+        $modules_info[$m] = ['enable'=>false,'class'=>'backend\modules\\'.$m.'\\'. $upm];
+    }
+}
+$modules_info['redactor'] = 'yii\redactor\RedactorModule';
 require 'menu.php';
 
 return [
@@ -20,7 +34,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => $modules,
+    'modules' => $modules_info,
     'components' => [
         'curl' => array(
             'class' => 'backend\helpers\Curl',

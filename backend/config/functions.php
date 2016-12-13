@@ -13,7 +13,6 @@ function load_modules($module_dir) {
     $modules = array();
     if ($dh = opendir($module_dir)) {
         while (($file = readdir($dh)) !== false) {
-
             $module_folder = $module_dir . '/' . $file;
             if ($file != '.' && $file != '..' && is_dir($module_folder)) {
                 $main_file = ucfirst($file);
@@ -35,9 +34,12 @@ function load_actived_modules($module_dir) {
     $active_info = get_module_map();
     if (!empty($active_info)) {
         foreach ($active_info as $m => $a) {
-            include_once $module_dir . '/' . $m . '/config.php';
+            if($a){
+                include_once $module_dir . '/' . $m . '/config.php';
+            }
         }
     }
+    return true;
 }
 
 function get_module_map() {
