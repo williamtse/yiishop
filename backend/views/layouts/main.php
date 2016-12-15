@@ -134,32 +134,32 @@ global $menus;
                                 <a class="ab-item" href="<?= Url::toRoute('product/create') ?>" aria-expanded="false"><span class="ab-icon"></span><span class="screen-reader-text">菜单</span></a>		
                             </li>
                             <li id="wp-admin-bar-wp-logo" class="menupop">
-                                <a class="ab-item" aria-haspopup="true" href="http://wordpress/wp-admin/about.php">
+                                <a class="ab-item" target="_blank" aria-haspopup="true" href="<?=YIISHOP_ORG?>">
                                     <span class="ab-icon"></span>
-                                    <span class="screen-reader-text">关于WordPress</span>
+                                    <span class="screen-reader-text">关于YiiShop</span>
                                 </a>
                                 <div class="ab-sub-wrapper">
                                     <ul id="wp-admin-bar-wp-logo-default" class="ab-submenu">
-                                        <li id="wp-admin-bar-about"><a class="ab-item" href="http://wordpress/wp-admin/about.php">关于WordPress</a>		</li>
+                                        <li id="wp-admin-bar-about"><a class="ab-item" target="_blank" href="<?=YIISHOP_ORG_ABOUT?>">关于YiiShop</a>		</li>
                                     </ul>
                                     <ul id="wp-admin-bar-wp-logo-external" class="ab-sub-secondary ab-submenu">
-                                        <li id="wp-admin-bar-wporg"><a class="ab-item" href="https://cn.wordpress.org/">WordPress.org</a>		</li>
-                                        <li id="wp-admin-bar-documentation"><a class="ab-item" href="https://codex.wordpress.org/">文档</a>		</li>
-                                        <li id="wp-admin-bar-support-forums"><a class="ab-item" href="http://zh-cn.forums.wordpress.org/">支持论坛</a>		</li>
-                                        <li id="wp-admin-bar-feedback"><a class="ab-item" href="http://zh-cn.forums.wordpress.org/forum/suggestions">反馈</a>		</li>
+                                        <li id="wp-admin-bar-wporg"><a class="ab-item" target="_blank" href="<?=YIISHOP_ORG?>">yiishop.org</a>		</li>
+                                        <li id="wp-admin-bar-documentation"><a class="ab-item" target="_blank" href="<?=YIISHOP_ORG_CODEX?>">文档</a>		</li>
+                                        <li id="wp-admin-bar-support-forums"><a class="ab-item" target="_blank" href="<?=YIISHOP_ORG_FORUMS?>">支持论坛</a>		</li>
+                                        <li id="wp-admin-bar-feedback"><a class="ab-item" href="<?=Url::toRoute(['suggestion/create'])?>">反馈</a>		</li>
                                     </ul>
                                 </div>		
                             </li>
-                            <li id="wp-admin-bar-site-name" class="menupop"><a class="ab-item" aria-haspopup="true" href="http://wordpress/">cms</a>
+                            <li id="wp-admin-bar-site-name" class="menupop"><a class="ab-item" aria-haspopup="true" href="<?=Url::toRoute(['site/index'])?>">YiiShop</a>
                                 <div class="ab-sub-wrapper">
                                     <ul id="wp-admin-bar-site-name-default" class="ab-submenu">
-                                        <li id="wp-admin-bar-view-site"><a class="ab-item" href="http://wordpress/">查看站点</a>		
+                                        <li id="wp-admin-bar-view-site"><a class="ab-item" target="_blank" href="<?=FRONTEND_WEBSITE?>">查看站点</a>		
                                         </li>
                                     </ul>
                                 </div>		
                             </li>
                             <li id="wp-admin-bar-comments">
-                                <a class="ab-item" href="http://wordpress/wp-admin/edit-comments.php">
+                                <a class="ab-item" href="<?=Url::toRoute(['comment/index'])?>">
                                     <span class="ab-icon"></span>
                                     <span id="ab-awaiting-mod" class="ab-label awaiting-mod pending-count count-0" aria-hidden="true">0</span>
                                     <span class="screen-reader-text">0条评论待审</span>

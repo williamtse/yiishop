@@ -13,6 +13,9 @@ require 'functions.php';
 $modules = load_modules('../modules');
 load_actived_modules('../modules');
 $modules_info = get_module_map();
+
+require 'website.php';
+
 foreach($modules as $m=>$info)
 {
     $upm = ucwords($m);

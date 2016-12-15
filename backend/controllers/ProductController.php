@@ -8,6 +8,8 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\Category;
+use common\models\Attribute;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -71,12 +73,45 @@ class ProductController extends Controller
                 var_dump($model->errors);
             }
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            $step = Yii::$app->request->get('step','SelectCategory');
+            $method = "createStep$step";
+            return $this->$method();
         }
     }
+    /**
+     * 选择分类
+     */
+    private function createStepSelectCategory()
+    {
+        return $this->render('step_category');
+    }
 
+    /**
+     * 选择类目下重要属性
+     */
+    private function createStepSelectMainAttribute()
+    {
+        $cid = Yii::$app->request->get('cid');
+        
+        return $this->render('step_main_attribute');
+    }
+    
+    /**
+     * 设置销售属性
+     */
+    private function createStepSetSaleAttribute()
+    {
+        
+    }
+    
+    /**
+     * 完成商品信息
+     */
+    private function createStepSetProduct()
+    {
+        
+    }
+    
     /**
      * Updates an existing Product model.
      * If update is successful, the browser will be redirected to the 'view' page.
